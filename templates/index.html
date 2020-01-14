@@ -4,19 +4,70 @@
 <head>
     <title>OPD Database</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/superhero/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
     <link rel="stylesheet" href="static/css/bootstrap.css">
 </head>
 
 <body>
     <div class="wrapper">
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                    <a class="navbar-brand" href="index.html">OPD Crime</a>
-            </nav>
-            <div class="hero text-center">
-                <h1>Bad Boys</h1>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="index.html">OPD Crime</a>
+        </nav>
+        <div class="hero text-center">
+            <h1>Bad Boys</h1>
+        </div>
+        <!-- Drop Down Menus -->
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="crimeSelect">Crime</label>
+                        <select class="form-control" id="crimeSelect">
+                            <option>1</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="yearSelect">Year</label>
+                        <select class="form-control" id="yearSelect">
+                            <option>1</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="timeSelect">Day/Night</label>
+                        <select class="form-control" id="timeSelect">
+                            <option>1</option>
+                        </select>
+                    </div>
+                </div>
             </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="map-id"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="plot-days"></div>
+                </div>
+                <div class="col-md-4">
+                    <div class="plot-time"></div>
+                </div>
+                <div class="col-md-4">
+                    <div class="plot-month"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <script src="dropdown.js"></script> -->
+    <!-- <script src="heatmap.js"></script> -->
+    <!-- <script src="dayplot.js"></script> -->
+    <!-- <script src="timeplot.js"></script> -->
+    <!-- <script src="monthplot.js"></script> -->
+
 </body>
 
 </html>
