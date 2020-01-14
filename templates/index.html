@@ -71,21 +71,27 @@
             </div>
         </div>
     </div>
-    <script>
-        let cat = {{cat}}
-        let dates = {{dates}}
-        let time = {{time}}
-        let lat = {{lat}}
-        let lng = {{lng}}
-        let year = {{year}}
-        let month = {{month}}
-        let day = {{day}}
+    <script> 
+        // let cat=[];
+        let cat_json = {{cat_json}};
+        // cat = cat.replace(&#39;, " ' ");
+        console.log(cat_json); 
     </script>
-    <script src="static/js/dropdown.js"></script>
-    <!-- <script src="static/js/heatmap.js"></script> -->
-    <!-- <script src="static/js/dayplot.js"></script> -->
-    <!-- <script src="static/js/timeplot.js"></script> -->
-    <!-- <script src="static/js/monthplot.js"></script> -->
+    <!-- <script>
+        let cat = {{cat}};
+        let dates = {{dates}};
+        let time = {{time}};
+        let lat = {{lat}};
+        let lng = {{lng}};
+        let year = {{year}};
+        let month = {{month}};
+        let day = {{day}};
+    </script> -->
+    <!-- <script src="../static/js/dropdown.js"></script> -->
+    <!-- <script src="../static/js/heatmap.js"></script> -->
+    <!-- <script src="../static/js/dayplot.js"></script> -->
+    <!-- <script src="../static/js/timeplot.js"></script> -->
+    <!-- <script src="../static/js/monthplot.js"></script> -->
 
 </body>
 

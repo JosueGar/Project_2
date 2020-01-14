@@ -1,6 +1,7 @@
-let cat = cat;
+// function buildDropdown (cat) {
+//     var cat = '/';
 
-console.log(cat)
+// console.log(cat)
 
 // //Get the IDs
 // var samples = data.samples;
