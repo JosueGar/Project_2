@@ -1,13 +1,15 @@
-// function buildDropdown (cat) {
-//     var cat = '/';
+// Category Dropdown
+var crimeOptions = $('#crimeSelect');
+$.each(cat, function(val, text) {
+    crimeOptions.append(
+        $('<option></option>').val(val).html(text)
+    );
+});
 
-// console.log(cat)
-
-// //Get the IDs
-// var samples = data.samples;
-// var optionValue = d3.select("select");
-// //Put the IDs into the dropdown list
-// samples.forEach((sample) => {
-//     optionValue.append("option")
-//     .text(sample.id)
-// });
+// Year Dropdown
+var yearOptions = $('#yearSelect');
+$.each(year_list, function(val,text) {
+    yearOptions.append(
+        $('<option></option>').val(val).html(text)
+    );
+});

@@ -2,15 +2,12 @@
 # Only pulls data from MongoDB database
 #################################################
 
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, json
 
 # Import our pymongo library, which lets us connect our Flask app to our Mongo database.
 import pymongo
 import requests
 from datetime import datetime
-import json
-
-#from sodapy import Socrata
 
 # Create an instance of our Flask app.
 app = Flask(__name__)
@@ -38,23 +35,27 @@ def index():
     lat = list(db.crimes.distinct( "lat" ))
     lng = list(db.crimes.distinct( "lng" ))
 
-    cat_json = json.dumps(cat)
-
     ## create a for loop for date and split date
-    year = []
+    years = []
     month = []
     day = []
 
     for date in dates:
         datetime = date.split("-")
-        year.append(datetime[0])
+        years.append(datetime[0])
         month.append(datetime[1])
         day.append(datetime[2])
-    print(cat_json)
-    print(type(cat_json))
-    #print(crime)
-    print(cat)
-    print(type(cat))
+
+    year_list = []
+    for year in years:
+        if year not in year_list:
+            year_list.append(year)
+    year_list.sort()
+    # print(year_list)
+    # print(type(year_list))
+    # print(crime)
+    # print(cat)
+    # print(type(cat))
     # print(year)
     # print(month)
     # print(day)
@@ -62,7 +63,7 @@ def index():
     # print(lat)
     # print(lng)
 
-    return render_template('index.html', cat_json=cat_json,cat=cat,year=year,month=month,day=day,time=time,lat=lat,lng=lng)
+    return render_template('index.html',cat=cat,years=years,month=month,day=day,time=time,lat=lat,lng=lng,year_list=year_list)
 
     #return ('hello world')
 
