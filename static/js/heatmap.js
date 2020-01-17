@@ -14,12 +14,14 @@ L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
 var baseURL = "https://data.cityoforlando.net/resource/4y9m-jbmz.json?";
 //var baseData = "./Project_2/data/crimes.json";
 var date = "$where=case_date_time between'2013-02-19T12:41:00.000' and '2014-10-30T22:15:00.000'";
-var category = "&case_offense_category=Assault";
+var category = "&case_offense_category=Theft";
 var status = "&status=Mapped";
-var limit = "&$limit=100";
+var limit = "&$limit=10000";
 
 // Assemble API query URL
 var url = baseURL + date + category + status + limit;
+
+console.log(url)
 
 d3.json(url, function(response) {
 
@@ -31,7 +33,7 @@ d3.json(url, function(response) {
     var location = response[i].location;
 
     if (location) {
-      heatArray.push([location.latitude[1], location.longitude[0]]);
+      heatArray.push([location.latitude, location.longitude]);
     }
   }
 
