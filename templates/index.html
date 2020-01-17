@@ -4,6 +4,7 @@
 <head>
     <title>OPD Database</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://code.jquery.com/jquery-git.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/bootstrap.css') }}">
@@ -57,28 +58,29 @@
             <div class="row">
                 <!-- Month Frequency Plot -->
                 <div class="col-md-4">
-                    <div class="plot-month"></div>
+                    <div id="plot-month"></div>
                 </div>
                 <!-- Days Frequency Plot -->
                 <div class="col-md-4">
-                    <div class="plot-days"></div>
+                    <div id="plot-days"></div>
                 </div>
                 <!-- Time Frequency Plot -->
                 <div class="col-md-4">
-                    <div class="plot-time"></div>
+                    <div id="plot-time"></div>
                 </div>
             </div>
         </div>
     </div>
     <script> 
-        let cat = {{cat | tojson}};
+        let cats = {{cats | tojson}};
         let year_list = {{year_list | tojson}};
+        let init_objs = {{init_objs | tojson}}
     </script>
     <script src="../static/js/dropdown.js"></script>
     <!-- <script src="../static/js/heatmap.js"></script> -->
-    <!-- <script src="../static/js/dayplot.js"></script> -->
-    <!-- <script src="../static/js/timeplot.js"></script> -->
-    <!-- <script src="../static/js/monthplot.js"></script> -->
+    <script src="../static/js/dayplot.js"></script>
+    <script src="../static/js/timeplot.js"></script>
+    <script src="../static/js/monthplot.js"></script>
 
 </body>
 

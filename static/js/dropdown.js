@@ -1,6 +1,6 @@
 // Category Dropdown
 var crimeOptions = $('#crimeSelect');
-$.each(cat, function(val, text) {
+$.each(cats, function(val, text) {
     crimeOptions.append(
         $('<option></option>').val(val).html(text)
     );

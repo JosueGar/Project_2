@@ -29,60 +29,82 @@ collection = db.crimes
 def index():
     # Store the entire team collection in a list
     #crime = list(db.crimes.find())
-    cat = list(db.crimes.distinct( "category" ))
-    dates = list(db.crimes.distinct( "date" ))
-    time = list(db.crimes.distinct( "time" ))
-    lat = list(db.crimes.distinct( "lat" ))
-    lng = list(db.crimes.distinct( "lng" ))
-
-    ## create a for loop for date and split date
+    dates = []
     years = []
-    month = []
-    day = []
-
-    for date in dates:
-        datetime = date.split("-")
-        years.append(datetime[0])
-        month.append(datetime[1])
-        day.append(datetime[2])
-
     year_list = []
-    for year in years:
+    init_cat = 'Assault'
+    init_year = '2010'
+    init_time = 'Day'
+
+    init_objs = []
+
+    for obj in db.crimes.find({}, {'_id': False}):
+        dates.append(obj['date'])
+        datesplit = obj['date'].split('-')
+        year = datesplit[0]
+        years.append(year)
+
         if year not in year_list:
             year_list.append(year)
+        else:
+            exit
+
+        time_split = obj['time'].split(':')
+        hour = int(time_split[0])
+        if (hour > 5) and (hour < 18):
+            time = 'Day'
+        else:
+            time = 'Night'
+        
+        if (obj['category'] == init_cat) and (year == init_year) and (init_time == time):
+            init_objs.append(obj)
+        else:
+            exit
+    
     year_list.sort()
-    # print(year_list)
-    # print(type(year_list))
-    # print(crime)
-    # print(cat)
-    # print(type(cat))
-    # print(year)
-    # print(month)
-    # print(day)
-    # print(time)
-    # print(lat)
-    # print(lng)
+    
+        
+    cats = list(db.crimes.distinct( "category" ))
+    # dates = db.crimes.find( "date" )
+    # time = list(db.crimes.distinct( "time" ))
+    # lat = list(db.crimes.distinct( "lat" ))
+    # lng = list(db.crimes.distinct( "lng" ))
 
-    return render_template('index.html',cat=cat,years=years,month=month,day=day,time=time,lat=lat,lng=lng,year_list=year_list)
+    # print(len(init_objs))
+    # print(type(init_objs))
 
-    #return ('hello world')
+    ## create a for loop for date and split date
+    # years = []
+    # month = []
+    # day = []
+
+    # for date in dates:
+    #     datetime = date.split("-")
+    #     years.append(datetime[0])
+    #     month.append(datetime[1])
+    #     day.append(datetime[2])
+
+    # print(len(years))
+
+    return render_template('index.html',cats=cats,years=years,time=time,year_list=year_list,init_cat=init_cat,init_year=init_year,init_time=init_time,init_objs=init_objs)
+
 
 # Set route
-@app.route('/<param>')
-def index2(param):
-    # Store the entire team collection in a list
-    #val = f"\"Assault\""
-    crime = list(db.crimes.find({'category':param}))
+# @app.route('/<cat>/<year>/<time>')
+# def index2(cat, year, time):
+#     # Store the entire team collection in a list
+#     #val = f"\"Assault\""
+#     crime = list(db.crimes.find({'category':param}))
     
 
 
-    #crime = list(db.crimes.find({'case_number':param}))
-    print(crime)
+#     #crime = list(db.crimes.find({'case_number':param}))
+#     print(crime)
 
-    # Return the template with the crime list passed in
-    return render_template('index3.html', crime=crime)
+#     # Return the template with the crime list passed in
+#     return render_template('index3.html', crime=crime)
     
-    #return (val)
+#     #return (val)
 
 
 
