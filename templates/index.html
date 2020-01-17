@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://code.jquery.com/jquery-git.js"></script>
+	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/bootstrap.css') }}">
 </head>
@@ -56,15 +57,15 @@
                 </div>
             </div>
             <div class="row">
-                <!-- Month Frequency Plot -->
+                <!-- Weekday CRIME Frequency Plot -->
                 <div class="col-md-4">
                     <div id="plot-month"></div>
                 </div>
-                <!-- Days Frequency Plot -->
+                <!-- Day or Night CRIME Frequency Plot -->
                 <div class="col-md-4">
                     <div id="plot-days"></div>
                 </div>
-                <!-- Time Frequency Plot -->
+                <!-- Month CRIME Frequency Plot -->
                 <div class="col-md-4">
                     <div id="plot-time"></div>
                 </div>
