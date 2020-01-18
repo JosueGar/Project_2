@@ -61,7 +61,7 @@ function initTimePlot() {
 function buildTimePlot(new_objs) {
     var data = new_objs;
     // Make a list for unique hours
-    var hours = [];
+    hours = [];
 
     // Grab hours from each object
     data.forEach((x) => {

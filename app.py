@@ -1,82 +1,97 @@
 #################################################
-# MongoDB and Flask Application
+# Only pulls data from MongoDB database
 #################################################
 
-from flask import Flask, render_template
-
+from flask import Flask, render_template, jsonify, json, request
 
 # Import our pymongo library, which lets us connect our Flask app to our Mongo database.
 import pymongo
-
-import requests
-from sodapy import Socrata
+# import requests
+from datetime import datetime
 
 # Create an instance of our Flask app.
 app = Flask(__name__)
 
-# Creates a collection in the database
 # Create connection variable
 conn = 'mongodb://localhost:27017'
 
 # Pass connection to the pymongo instance.
 client = pymongo.MongoClient(conn)
 
-# Define database and collection
+# Connect to a database. Will create one if not already available.
 db = client.opdcrime_db
+
+# Define database and collection
 collection = db.crimes
-
-# Drops collection if available to remove duplicates
-db.crimes.drop()
-
-# Creates a collection in the database
-crime_data = {
-    'case_number': [],
-    'date': [],
-    'time': [],
-    'category': [],
-    'lat': [],
-    'lng': []}
-opd_data = []
-
-query_url = 'https://data.cityoforlando.net/resource/4y9m-jbmz.json'
-
-client = Socrata('data.cityoforlando.net', None)
-
-results = client.get("4y9m-jbmz", limit=190000)
-
-for i in results:
-    if i['status'] == 'Mapped':
-        crime_data['case_number'] = i['case_number']
-        datetime = i['case_date_time'].split('T')
-        crime_data['date'] = datetime[0]
-        crime_data['time'] = datetime[1]
-        crime_data['category'] = i['case_offense_category']
-        crime_data['lat'] = i['location']['latitude']
-        crime_data['lng'] = i['location']['longitude']
-        post = {
-            'case_number' : i['case_number'],
-            'date' : datetime[0],
-            'time' : datetime[1],
-            'category' : i['case_offense_category'],
-            'lat' : i['location']['latitude'],
-            'lng' : i['location']['longitude']
-            }
-        collection.insert_one(post)
-    else:
-        next
-    opd_data.append(crime_data)
-
 
 # Set route
 @app.route('/')
 def index():
     # Store the entire team collection in a list
-    crime = list(db.crimes.find())
-    print(crime)
+    dates = []
+    years = []
+    year_list = []
+    init_cat = 'Assault'
+    init_year = '2010'
+    init_time = 'Day'
 
-    # Return the template with the teams list passed in
-    return render_template('index2.html', crime=crime)
+    init_objs = []
 
+    for obj in db.crimes.find({}, {'_id': False}):
+        dates.append(obj['date'])
+        datesplit = obj['date'].split('-')
+        year = datesplit[0]
+        years.append(year)
+
+        if year not in year_list:
+            year_list.append(year)
+        else:
+            exit
+
+        time_split = obj['time'].split(':')
+        hour = int(time_split[0])
+        if (hour > 5) and (hour < 18):
+            time = 'Day'
+        else:
+            time = 'Night'
+        
+        if (obj['category'] == init_cat) and (year == init_year) and (init_time == time):
+            init_objs.append(obj)
+        else:
+            exit
+    
+    year_list.sort()
+     
+    cats = list(db.crimes.distinct( "category" ))
+
+    return render_template('index.html',cats=cats,years=years,time=time,year_list=year_list,init_cat=init_cat,init_year=init_year,init_time=init_time,init_objs=init_objs)
+
+
+@app.route('/_data_search')
+def data_search():
+    car = request.args.get('car', 0)
+    year = request.args.get('year', 0)
+    dn = request.args.get('dn', 0)
+    new_objs = []
+
+    for obj in db.crimes.find({}, {'_id': False}):
+        datesplit = obj['date'].split('-')
+        search_year = datesplit[0]
+
+        time_split = obj['time'].split(':')
+        hour = int(time_split[0])
+        if (hour > 5) and (hour < 18):
+            search_time = 'Day'
+        else:
+            search_time = 'Night'
+        
+        if (obj['category'] == car) and (search_year == year) and (search_time == dn):
+            new_objs.append(obj)
+        else:
+            exit
+
+    # Return the new objects
+    return jsonify(new_objs = new_objs)
 
 if __name__ == "__main__":
     app.run(debug=True)
