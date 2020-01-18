@@ -74,13 +74,16 @@
     <script> 
         let cats = {{cats | tojson}};
         let year_list = {{year_list | tojson}};
-        let init_objs = {{init_objs | tojson}}
+        let init_objs = {{init_objs | tojson}};
+    </script>
+    <script type=text/javascript>
+        $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
     </script>
     <script src="../static/js/dropdown.js"></script>
     <!-- <script src="../static/js/heatmap.js"></script> -->
+    <script src="../static/js/monthplot.js"></script>
     <script src="../static/js/dayplot.js"></script>
     <script src="../static/js/timeplot.js"></script>
-    <script src="../static/js/monthplot.js"></script>
 
 </body>
 

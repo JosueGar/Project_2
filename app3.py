@@ -2,11 +2,11 @@
 # Only pulls data from MongoDB database
 #################################################
 
-from flask import Flask, render_template, jsonify, json
+from flask import Flask, render_template, jsonify, json, request
 
 # Import our pymongo library, which lets us connect our Flask app to our Mongo database.
 import pymongo
-import requests
+# import requests
 from datetime import datetime
 
 # Create an instance of our Flask app.
@@ -67,23 +67,31 @@ def index():
     return render_template('index.html',cats=cats,years=years,time=time,year_list=year_list,init_cat=init_cat,init_year=init_year,init_time=init_time,init_objs=init_objs)
 
 
-# @app.route('/_data_search')
-# def index2(cat, year, time):
-#     # Store the entire team collection in a list
-#     #val = f"\"Assault\""
-#     crime = list(db.crimes.find({'category':param}))
-    
+@app.route('/_data_search')
+def data_search():
+    car = request.args.get('car', 0)
+    year = request.args.get('year', 0)
+    dn = request.args.get('dn', 0)
+    new_objs = []
 
+    for obj in db.crimes.find({}, {'_id': False}):
+        datesplit = obj['date'].split('-')
+        search_year = datesplit[0]
 
-#     #crime = list(db.crimes.find({'case_number':param}))
-#     print(crime)
+        time_split = obj['time'].split(':')
+        hour = int(time_split[0])
+        if (hour > 5) and (hour < 18):
+            search_time = 'Day'
+        else:
+            search_time = 'Night'
+        
+        if (obj['category'] == car) and (search_year == year) and (search_time == dn):
+            new_objs.append(obj)
+        else:
+            exit
 
-#     # Return the template with the crime list passed in
-#     return render_template('index3.html', crime=crime)
-    
-#     #return (val)
-
-
+    # Return the new objects
+    return jsonify(new_objs = new_objs)
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -165,18 +165,17 @@ function buildDayPlot(new_objs) {
 $("select").change(function() {
     // Grab selected crime
     var car = $('#crimeSelect option:selected').text();
-    console.log(car);
     // Grab selected year
     var year = $('#yearSelect option:selected').text();
-    console.log(year);
     // Grab selected Day or Night
     var dn = $('#timeSelect option:selected').text();
-    console.log(dn);
-    // $.getJSON(@SCRIPT_ROOT + '/_data_search', {
-    //     car: $('#crimeSelect option:selected').text(),
-    //     year: $('#yearSelect option:selected').text(),
-    //     dn: $('#timeSelect option:selected').text();
-    // })
+    $.getJSON($SCRIPT_ROOT + '/_data_search', {
+        car: $('#crimeSelect option:selected').text(),
+        year: $('#yearSelect option:selected').text(),
+        dn: $('#timeSelect option:selected').text()
+    }, function(data) {
+        buildDayPlot(data.new_objs)
+    })
 });
 
 initDayPlot();

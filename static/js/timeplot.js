@@ -117,13 +117,20 @@ function buildTimePlot(new_objs) {
     Plotly.newPlot("plot-time", data, layout), {responsive: true};
 };
 
-function grabInfo() {
+$("select").change(function() {
     // Grab selected crime
     var car = $('#crimeSelect option:selected').text();
     // Grab selected year
     var year = $('#yearSelect option:selected').text();
     // Grab selected Day or Night
     var dn = $('#timeSelect option:selected').text();
-};
+    $.getJSON($SCRIPT_ROOT + '/_data_search', {
+        car: $('#crimeSelect option:selected').text(),
+        year: $('#yearSelect option:selected').text(),
+        dn: $('#timeSelect option:selected').text()
+    }, function(data) {
+        buildTimePlot(data.new_objs)
+    })
+});
 
 initTimePlot();
