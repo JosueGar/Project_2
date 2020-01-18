@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>OPD Database</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.3/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js" integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q==" crossorigin=""></script>
+    <!-- Plotly -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-git.js"></script>
+    <!-- CSS -->
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/bootstrap.css') }}">
+    <!-- Marker Cluster JS & CSS -->
+    <script type="text/javascript" src="https://unpkg.com/leaflet.markercluster@1.0.3/dist/leaflet.markercluster.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.3/dist/MarkerCluster.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.3/dist/MarkerCluster.Default.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="index.html">OPD Crime</a>
+        </nav>
+        <!-- Parallax Picture -->
+        <div class="hero text-center">
+            <h1>Bad Boys Bad Boys</h1>
+        </div>
+        <!-- Drop Down Menus -->
+        <div class="container">
+            <div class="row">
+                <!-- Category Dropdown -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="crimeSelect">Crime</label>
+                        <select class="form-control" id="crimeSelect">
+                        </select>
+                    </div>
+                </div>
+                <!-- Year Dropdown -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="yearSelect">Year</label>
+                        <select class="form-control" id="yearSelect">
+                        </select>
+                    </div>
+                </div>
+                <!-- Day/Night Dropdown -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="timeSelect">Day/Night</label>
+                        <select class="form-control" id="timeSelect">
+                            <option>Day</option>
+                            <option>Night</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!-- Map -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="map-id" style="width: 1140px;height: 450px;"></div>
+                </div>
+            </div>
+            <div class="row">
+                <!-- Weekday CRIME Frequency Plot -->
+                <div class="col-md-4">
+                    <div id="plot-month"></div>
+                </div>
+                <!-- Day or Night CRIME Frequency Plot -->
+                <div class="col-md-4">
+                    <div id="plot-days"></div>
+                </div>
+                <!-- Month CRIME Frequency Plot -->
+                <div class="col-md-4">
+                    <div id="plot-time"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Scripts to bring variables from Flask -->
+    <script> 
+        let cats = {{cats | tojson}};
+        let year_list = {{year_list | tojson}};
+        let init_objs = {{init_objs | tojson}};
+    </script>
+    <!-- Script to connect back to Flask -->
+    <script type=text/javascript>
+        $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    </script>
+    <!-- Dropdowns -->
+    <script src="../static/js/dropdown.js"></script>
+    <!-- API key -->
+    <script src="../static/js/config.js"></script>
+    <!-- Map -->
+    <script src="../static/js/map.js"></script>
+    <!-- Plots -->
+    <script src="../static/js/plots.js"></script>
+</body>
+
+</html>
