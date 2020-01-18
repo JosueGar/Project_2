@@ -28,7 +28,6 @@ collection = db.crimes
 @app.route('/')
 def index():
     # Store the entire team collection in a list
-    #crime = list(db.crimes.find())
     dates = []
     years = []
     year_list = []
@@ -62,35 +61,13 @@ def index():
             exit
     
     year_list.sort()
-    
-        
+     
     cats = list(db.crimes.distinct( "category" ))
-    # dates = db.crimes.find( "date" )
-    # time = list(db.crimes.distinct( "time" ))
-    # lat = list(db.crimes.distinct( "lat" ))
-    # lng = list(db.crimes.distinct( "lng" ))
-
-    # print(len(init_objs))
-    # print(type(init_objs))
-
-    ## create a for loop for date and split date
-    # years = []
-    # month = []
-    # day = []
-
-    # for date in dates:
-    #     datetime = date.split("-")
-    #     years.append(datetime[0])
-    #     month.append(datetime[1])
-    #     day.append(datetime[2])
-
-    # print(len(years))
 
     return render_template('index.html',cats=cats,years=years,time=time,year_list=year_list,init_cat=init_cat,init_year=init_year,init_time=init_time,init_objs=init_objs)
 
 
-# Set route
-# @app.route('/<cat>/<year>/<time>')
+# @app.route('/_data_search')
 # def index2(cat, year, time):
 #     # Store the entire team collection in a list
 #     #val = f"\"Assault\""
