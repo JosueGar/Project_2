@@ -10,8 +10,8 @@ Here is a link to the dataset: https://data.cityoforlando.net/resource/4y9m-jbmz
 To run the app:
 
 1. You'll need to have MongoDB installed
-2. Run app.py first
+2. Run pulldata.py first
 3. Check to make sure your database is created in MongoDB
-4. Run pulldata.py
+4. Run app.py
 5. Type: http://127.0.0.1:5000/ in your browser
 6. Have Fun Clicking Away!
